@@ -1,31 +1,57 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-// import { createStackNavigator } from 'react-navigation';
+import { View, StatusBar, Image, ScrollView, } from 'react-native';
+import { createDrawerNavigator, SafeAreaView, DrawerItems } from 'react-navigation';
+import Menu from './Menu';
+import Shop from './Shop/Shop';
+import ChangeInfo from '../ChangeInfo/ChangeInfo';
+import OrdersHistory from '../OrdersHistory/OrdersHistory';
 
-
+StatusBar.setHidden(true);
 export default class Main extends Component {
-    // gotoAuthentication() {
-    //     this.props.
-    // }
+
     static navigationOptions = {
-        title: 'Home',
-      };
+        title: 'Home', headerStyle: { display: 'none' }
+    };
     render() {
         return (
-         
-            <View>
-                 <Text>Main component</Text>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('AUTHENTICATION')}>
-                    <Text>Go to Authentication</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('CHANGE_INFO')}>
-                    <Text>Go to ChangeInfo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('ORDERS_HISTORY')}>
-                    <Text>Go to OrdersHistory</Text>
-                </TouchableOpacity>
-            </View>
-            
+ 
+            <DrawerStack />
+   
         );
     }
 }
+const CustomDrawerComponent = (props) => (
+    <SafeAreaView style={{ flex: 1 }}>
+        <View
+            style={{
+                height: 160,
+                backgroundColor: 'white',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
+            <Image
+                source={require('../../assets/wordcloud_yb8aur7dt.png')}
+                style={{ height: 120, width: 120, borderRadius: 60 }}
+            />
+        </View>
+
+        <ScrollView>
+            <DrawerItems {...props} />
+        </ScrollView>
+    </SafeAreaView>
+);
+const DrawerStack = createDrawerNavigator(
+    {
+        MENU: Menu,
+        SHOP: Shop,
+        CHANGE_INFO: ChangeInfo,
+        ORDER_HISTORY: OrdersHistory
+    },
+    {
+        contentComponent: CustomDrawerComponent,
+        contentOptions: {
+            activeTintColor: 'orange'
+        }
+    }
+);

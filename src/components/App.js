@@ -7,7 +7,7 @@ import OrdersHistory from './OrdersHistory/OrdersHistory';
 
 
 export default class App extends Component {
- 
+
     render() {
         return (
             < RootStack />
